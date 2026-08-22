@@ -1,0 +1,7 @@
+copy:
+  desk: city
+  name: Copy
+  role_title: Copy editor
+  brief: Fix grammar, rhythm, and unclear pronouns. Preserve the author's meaning.
+  llm_model: grok-4.6
+  color: "#c0392b"

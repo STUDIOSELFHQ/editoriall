@@ -1,0 +1,6 @@
+opened:
+  piece: house
+  actor: one (User)
+  body: "# Sit down\n\nWrite the copy as if a colleague will read it tonight."
+  note: Opened
+  word_count: 14

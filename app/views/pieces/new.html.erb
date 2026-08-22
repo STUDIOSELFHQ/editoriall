@@ -1,0 +1,29 @@
+<% content_for :title, "File a piece — Editoriall" %>
+
+<div class="mx-auto max-w-lg">
+  <p class="kicker"><%= link_to @desk.name, @desk %> / New piece</p>
+  <h1 class="mt-1 text-4xl font-semibold tracking-tight">File a piece</h1>
+  <p class="mt-3 text-ink-soft">You'll be in the chair. The rest of the desk will be on the masthead.</p>
+
+  <%= form_with model: [@desk, @piece], class: "mt-8" do |form| %>
+    <% if @piece.errors.any? %>
+      <ul class="mb-4 text-mark">
+        <% @piece.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div>
+      <%= form.label :title, class: "kicker" %>
+      <%= form.text_field :title, required: true, autofocus: true, class: "field" %>
+    </div>
+    <div class="mt-5">
+      <%= form.label :dek, class: "kicker" %>
+      <%= form.text_field :dek, class: "field", placeholder: "One line that earns the jump" %>
+    </div>
+    <div class="mt-8 flex gap-3">
+      <%= form.submit "Take the chair", class: "btn" %>
+      <%= link_to "Cancel", @desk, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,37 @@
+<% content_for :title, "Desks — Editoriall" %>
+
+<div class="flex flex-wrap items-end justify-between gap-4 border-b border-ink pb-4">
+  <div>
+    <p class="kicker">Masthead</p>
+    <h1 class="mt-1 text-4xl font-semibold tracking-tight">Desks</h1>
+  </div>
+  <div class="flex flex-wrap gap-3">
+    <%= form_with url: joins_path, class: "flex items-end gap-2" do |form| %>
+      <div>
+        <%= form.label :join_code, "Join code", class: "kicker" %>
+        <%= form.text_field :join_code, required: true, maxlength: 8, class: "field w-32 uppercase", placeholder: "CITY01" %>
+      </div>
+      <%= form.submit "Join", class: "btn btn-ghost" %>
+    <% end %>
+    <%= link_to "Open a desk", new_desk_path, class: "btn" %>
+  </div>
+</div>
+
+<% if @desks.any? %>
+  <ul class="mt-8 grid gap-4 md:grid-cols-2">
+    <% @desks.each do |desk| %>
+      <li>
+        <%= link_to desk, class: "desk-card block p-6 hover:border-ink" do %>
+          <p class="kicker"><%= pluralize(desk.pieces.size, "piece") %> · <%= pluralize(desk.agents.size, "agent") %></p>
+          <h2 class="mt-2 text-2xl font-semibold tracking-tight"><%= desk.name %></h2>
+          <% if desk.description.present? %>
+            <p class="mt-2 text-ink-soft"><%= desk.description %></p>
+          <% end %>
+          <p class="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-ink-soft">Owner <%= desk.owner.name %></p>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="mt-12 italic text-ink-soft">No desks yet. Open one, or enter a join code.</p>
+<% end %>

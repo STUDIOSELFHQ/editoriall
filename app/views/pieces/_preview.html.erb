@@ -1,0 +1,15 @@
+<p class="kicker">Pass from <%= pass.agent.name %></p>
+<h1 class="copy-title mt-2"><%= @piece.title %></h1>
+<p class="mt-4 leading-relaxed text-ink-soft"><%= pass.summary %></p>
+<hr class="rule my-6">
+<div class="copy-body whitespace-pre-wrap"><%= pass.proposed_body %></div>
+<% if @piece.in_chair?(current_user) %>
+  <div class="mt-8 flex flex-wrap gap-3">
+    <%= button_to "Apply pass", apply_piece_pass_path(@piece, pass), class: "btn" %>
+    <%= button_to "Kill pass", reject_piece_pass_path(@piece, pass), class: "btn btn-ghost" %>
+    <%= link_to "Back to copy", piece_path(@piece), class: "btn btn-ghost", data: { turbo_frame: "_top" } %>
+  </div>
+<% else %>
+  <p class="mt-8 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-ink-soft">Only the chair can apply this pass.</p>
+  <%= link_to "Back to copy", piece_path(@piece), class: "btn btn-ghost mt-3 inline-flex", data: { turbo_frame: "_top" } %>
+<% end %>

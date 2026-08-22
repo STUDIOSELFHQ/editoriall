@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= render "layouts/head" %>
+  </head>
+  <body class="min-h-dvh bg-paper text-ink antialiased">
+    <%= render "layouts/app_bar" %>
+    <%= render "layouts/flash" %>
+    <main class="mx-auto w-full max-w-6xl px-5 py-8">
+      <%= yield %>
+    </main>
+  </body>
+</html>

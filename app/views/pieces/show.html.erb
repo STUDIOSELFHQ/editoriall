@@ -1,0 +1,68 @@
+<% content_for :title, "#{@piece.title} — Editoriall" %>
+<%= turbo_stream_from @piece %>
+
+<div class="editor-shell" data-controller="copy" data-copy-delay-value="900" data-action="mouseup->copy#captureQuote">
+  <header class="editor-top">
+    <div class="flex min-w-0 items-center gap-3">
+      <%= wordmark %>
+      <span class="hidden text-rule sm:inline">/</span>
+      <%= link_to @desk.name, @desk, class: "hidden truncate font-mono text-[0.72rem] uppercase tracking-[0.12em] text-ink-soft sm:inline" %>
+    </div>
+    <div class="flex flex-wrap items-center justify-end gap-3">
+      <span id="save-status" class="kicker hidden sm:inline" data-copy-target="status"><%= @piece.in_chair?(current_user) ? "In the chair" : "Watching" %></span>
+      <span class="flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.12em]">
+        <%= actor_initials(@piece.chair) %>
+        <span class="hidden sm:inline"><%= @piece.chair.name %></span>
+      </span>
+      <% unless @piece.in_chair?(current_user) %>
+        <%= button_to "Take the chair", piece_chair_path(@piece), class: "btn" %>
+      <% end %>
+      <%= button_to "Sign out", session_path, method: :delete, class: "link-button font-mono text-[0.72rem] uppercase tracking-[0.12em]" %>
+    </div>
+  </header>
+
+  <div class="editor-grid">
+    <aside class="editor-col p-4">
+      <p class="kicker">Spine</p>
+      <div class="mt-3" data-copy-target="spine">
+        <% if @piece.spine.any? %>
+          <% @piece.spine.each do |heading| %>
+            <div class="spine-item spine-l<%= heading[:level] %>"><%= heading[:text] %></div>
+          <% end %>
+        <% else %>
+          <p class="spine-empty">Headings in the copy become the spine.</p>
+        <% end %>
+      </div>
+      <hr class="rule-light my-6">
+      <p class="kicker">Words</p>
+      <p class="mt-2 font-mono text-2xl tracking-tight" data-copy-target="count"><%= @piece.word_count %></p>
+      <% if @piece.in_chair?(current_user) %>
+        <div class="mt-6">
+          <p class="kicker">Status</p>
+          <%= form_with model: @piece, class: "mt-2", data: { turbo: false } do |form| %>
+            <%= form.hidden_field :lock_version %>
+            <%= form.select :status, Piece::STATUSES.map { |status| [status.tr("_", " "), status] }, {}, class: "field", onchange: "this.form.requestSubmit()" %>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mt-6 status-pill <%= piece_status_class(@piece.status) %>"><%= @piece.status_label %></p>
+      <% end %>
+    </aside>
+
+    <section class="editor-col p-6 sm:p-10">
+      <%= turbo_frame_tag "copy" do %>
+        <% if @preview_pass&.ready? %>
+          <%= render "pieces/preview", pass: @preview_pass %>
+        <% elsif @piece.in_chair?(current_user) %>
+          <%= render "pieces/editor" %>
+        <% else %>
+          <%= render "pieces/reader" %>
+        <% end %>
+      <% end %>
+    </section>
+
+    <aside class="editor-col">
+      <%= render "pieces/rail" %>
+    </aside>
+  </div>
+</div>

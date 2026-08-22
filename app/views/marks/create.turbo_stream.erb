@@ -1,0 +1,12 @@
+<%= turbo_stream.prepend "marks", partial: "marks/mark", locals: { mark: @mark, piece: @piece } %>
+<%= turbo_stream.replace "new_mark" do %>
+  <%= form_with model: [@piece, Mark.new], class: "mt-3", data: { copy_target: "markForm" }, id: "new_mark" do |form| %>
+    <%= form.label :quote, "Quote", class: "kicker" %>
+    <%= form.text_area :quote, class: "field min-h-16 text-sm", data: { copy_target: "quote" }, placeholder: "Select lines in the copy" %>
+    <%= form.label :body, "Note", class: "kicker mt-3" %>
+    <%= form.text_area :body, required: true, class: "field min-h-20 text-sm", placeholder: "What should change" %>
+    <div class="mt-3">
+      <%= form.submit "File mark", class: "btn btn-mark" %>
+    </div>
+  <% end %>
+<% end %>

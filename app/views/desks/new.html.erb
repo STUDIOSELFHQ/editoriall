@@ -1,0 +1,29 @@
+<% content_for :title, "Open a desk — Editoriall" %>
+
+<div class="mx-auto max-w-lg">
+  <p class="kicker">New desk</p>
+  <h1 class="mt-1 text-4xl font-semibold tracking-tight">Open a desk</h1>
+  <p class="mt-3 text-ink-soft">Copy, Slot, and Research will already be on the masthead.</p>
+
+  <%= form_with model: @desk, class: "mt-8" do |form| %>
+    <% if @desk.errors.any? %>
+      <ul class="mb-4 text-mark">
+        <% @desk.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div>
+      <%= form.label :name, class: "kicker" %>
+      <%= form.text_field :name, required: true, autofocus: true, class: "field", placeholder: "The City Desk" %>
+    </div>
+    <div class="mt-5">
+      <%= form.label :description, "Dek", class: "kicker" %>
+      <%= form.text_field :description, class: "field", placeholder: "What this desk is for" %>
+    </div>
+    <div class="mt-8 flex gap-3">
+      <%= form.submit "Open", class: "btn" %>
+      <%= link_to "Cancel", desks_path, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,7 @@
+<%= form_with model: @piece, data: { copy_target: "form", turbo: true, action: "turbo:submit-end->copy#saved" } do |form| %>
+  <%= form.hidden_field :lock_version %>
+  <%= form.text_field :title, class: "copy-title", placeholder: "Headline", data: { action: "input->copy#schedule" } %>
+  <%= form.text_field :dek, class: "copy-dek", placeholder: "Dek — the line under the headline", data: { action: "input->copy#schedule" } %>
+  <hr class="rule my-6">
+  <%= form.text_area :body, class: "copy-body", data: { copy_target: "body", action: "input->copy#schedule mouseup->copy#captureQuote keyup->copy#captureQuote" }, placeholder: "Write the copy. Use # headings to build the spine." %>
+<% end %>

@@ -1,0 +1,11 @@
+<div class="mx-auto flex min-h-dvh max-w-lg flex-col justify-center px-5 py-12">
+  <%= link_to root_path, class: "self-start" do %>
+    <p class="kicker">Editoriall</p>
+    <p class="wordmark mt-1 text-2xl"><%= wordmark(link: false) %></p>
+  <% end %>
+  <div class="auth-card mt-8 p-8">
+    <p class="kicker"><%= kicker %></p>
+    <h1 class="mt-2 text-4xl font-semibold tracking-tight"><%= title %></h1>
+    <%= yield %>
+  </div>
+</div>

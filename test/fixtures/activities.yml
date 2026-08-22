@@ -1,0 +1,6 @@
+opened:
+  desk: city
+  piece: house
+  actor: one (User)
+  verb: opened_desk
+  payload: {}

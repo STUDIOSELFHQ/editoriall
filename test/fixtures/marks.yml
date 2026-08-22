@@ -1,0 +1,6 @@
+lede:
+  piece: house
+  actor: two (User)
+  quote: Write the copy
+  body: Tell them to take the chair, not just to write.
+  status: open

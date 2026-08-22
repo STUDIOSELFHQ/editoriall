@@ -1,0 +1,9 @@
+<header class="app-bar">
+  <div class="app-bar-inner">
+    <%= wordmark %>
+    <nav class="app-bar-nav">
+      <%= link_to "Desks", desks_path %>
+      <%= button_to "Sign out", session_path, method: :delete, class: "link-button" %>
+    </nav>
+  </div>
+</header>

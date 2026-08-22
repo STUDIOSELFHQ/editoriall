@@ -1,0 +1,103 @@
+<% content_for :title, "#{@desk.name} — Editoriall" %>
+
+<header class="border-b border-ink pb-6">
+  <p class="kicker"><%= link_to "Desks", desks_path %> / Desk</p>
+  <div class="mt-2 flex flex-wrap items-end justify-between gap-4">
+    <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl"><%= @desk.name %></h1>
+    <%= link_to "File a piece", new_desk_piece_path(@desk), class: "btn" %>
+  </div>
+  <% if @desk.description.present? %>
+    <p class="mt-3 max-w-2xl italic text-ink-soft"><%= @desk.description %></p>
+  <% end %>
+</header>
+
+<div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+  <section>
+    <p class="kicker">Docket</p>
+    <% if @pieces.any? %>
+      <ul class="mt-3">
+        <% @pieces.each do |piece| %>
+          <li>
+            <%= link_to piece, class: "docket-row mt-3 flex items-start justify-between gap-4 p-4 hover:border-ink" do %>
+              <div>
+                <h2 class="text-xl font-semibold tracking-tight"><%= piece.title %></h2>
+                <% if piece.dek.present? %>
+                  <p class="mt-1 italic text-ink-soft"><%= piece.dek %></p>
+                <% end %>
+                <p class="mt-3 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-ink-soft">
+                  Chair <%= piece.chair.name %> · <%= pluralize(piece.word_count, "word") %>
+                </p>
+              </div>
+              <span class="status-pill <%= piece_status_class(piece.status) %>"><%= piece.status_label %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="mt-4 italic text-ink-soft">Nothing filed. <%= link_to "Write the first piece", new_desk_piece_path(@desk), class: "text-ink" %>.</p>
+    <% end %>
+  </section>
+
+  <aside class="space-y-8">
+    <section>
+      <p class="kicker">Masthead</p>
+      <ul class="mt-3">
+        <% @memberships.each do |membership| %>
+          <li class="flex items-center gap-3 border-t border-rule py-2">
+            <%= actor_initials(membership.user) %>
+            <div class="min-w-0">
+              <p><%= membership.user.name %></p>
+              <p class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-soft"><%= membership.role %></p>
+            </div>
+          </li>
+        <% end %>
+        <% @desk.agents.each do |agent| %>
+          <li class="flex items-center gap-3 border-t border-rule py-2">
+            <%= actor_initials(agent) %>
+            <div class="min-w-0">
+              <p><%= agent.name %></p>
+              <p class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-soft"><%= agent.role_title %> · agent</p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+
+    <section>
+      <p class="kicker">Join code</p>
+      <p class="mt-2 font-mono text-2xl tracking-[0.2em]"><%= @desk.join_code %></p>
+      <p class="mt-2 text-sm text-ink-soft">Share it with a human who already has an Editoriall account.</p>
+      <%= form_with url: desk_memberships_path(@desk), class: "mt-4" do |form| %>
+        <%= form.label :email_address, "Seat someone by email", class: "kicker" %>
+        <%= form.email_field :email_address, required: true, class: "field", placeholder: "editor@desk.test" %>
+        <div class="mt-3">
+          <%= form.submit "Seat", class: "btn btn-ghost" %>
+        </div>
+      <% end %>
+    </section>
+
+    <section>
+      <p class="kicker">Hire an agent</p>
+      <p class="mt-2 text-sm text-ink-soft">The desk already has Copy, Slot, and Research. Add the rest when you need them.</p>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <% Agent::TEMPLATES.each do |template| %>
+          <% next if @desk.agents.exists?(name: template[:name]) %>
+          <%= button_to template[:name], desk_agents_path(@desk), params: { template: template[:name] }, class: "btn btn-ghost" %>
+        <% end %>
+      </div>
+    </section>
+
+    <section>
+      <p class="kicker">Log</p>
+      <ul class="mt-2">
+        <% @activities.each do |activity| %>
+          <li class="activity-row text-sm">
+            <span class="font-medium"><%= activity.actor.actor_name %></span>
+            <%= activity.phrase %>
+            <span class="block font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-soft"><%= relative_time(activity.created_at) %></span>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  </aside>
+</div>

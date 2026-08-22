@@ -1,0 +1,14 @@
+house_one:
+  piece: house
+  seatable: one (User)
+  role: chair
+
+house_two:
+  piece: house
+  seatable: two (User)
+  role: editor
+
+house_copy:
+  piece: house
+  seatable: copy (Agent)
+  role: agent

@@ -1,0 +1,9 @@
+house:
+  desk: city
+  chair: one
+  title: House style
+  dek: How this desk works.
+  body: "# Sit down\n\nWrite the copy as if a colleague will read it tonight."
+  status: draft
+  word_count: 14
+  lock_version: 0

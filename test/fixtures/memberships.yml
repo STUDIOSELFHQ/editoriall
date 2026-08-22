@@ -1,0 +1,9 @@
+one_city:
+  desk: city
+  user: one
+  role: owner
+
+two_city:
+  desk: city
+  user: two
+  role: writer

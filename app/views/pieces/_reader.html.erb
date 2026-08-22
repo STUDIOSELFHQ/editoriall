@@ -1,0 +1,9 @@
+<h1 class="copy-title"><%= @piece.title %></h1>
+<% if @piece.dek.present? %>
+  <p class="copy-dek"><%= @piece.dek %></p>
+<% end %>
+<hr class="rule my-6">
+<div class="copy-body whitespace-pre-wrap" data-copy-target="quoteSource"><%= @piece.body.presence || "Nothing filed yet. Take the chair to write." %></div>
+<p class="mt-10 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-ink-soft">
+  <%= @piece.chair.name %> holds the chair. Mark the copy, send a pass, or take the chair.
+</p>

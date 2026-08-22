@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Newsreader", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-serif: "Newsreader", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --color-paper: #f3efe4;
+  --color-paper-2: #e8e0ce;
+  --color-ink: #1c1914;
+  --color-ink-soft: #5e574c;
+  --color-rule: #d3cbb6;
+  --color-mark: #c0392b;
+  --color-mark-soft: #f4d7d2;
+  --color-navy: #2c4a6e;
+}
+
+@layer base {
+  html { font-size: 18px; }
+  body { font-family: var(--font-serif); }
+  button { cursor: pointer; }
+}
+
+@layer components {
+  .wordmark {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .app-bar .wordmark,
+  .editor-top .wordmark { font-size: 1.35rem; }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  .flash {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    padding: 0.55rem 1.25rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .flash-notice { background: #e4eedf; color: #24331f; }
+  .flash-alert { background: var(--color-mark-soft); color: var(--color-mark); }
+
+  .app-bar {
+    border-bottom: 1px solid var(--color-ink);
+  }
+  .app-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.85rem 1.25rem;
+  }
+  .app-bar-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .link-button {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    line-height: 1;
+  }
+  .btn:hover { background: var(--color-mark); border-color: var(--color-mark); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover { background: var(--color-ink); color: var(--color-paper); }
+  .btn-mark {
+    background: var(--color-mark);
+    border-color: var(--color-mark);
+    color: var(--color-paper);
+  }
+  .btn-mark:hover { background: var(--color-ink); border-color: var(--color-ink); }
+
+  .field {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-rule);
+    border-radius: 0;
+    padding: 0.6rem 0;
+    color: var(--color-ink);
+    outline: none;
+  }
+  .field:focus { border-bottom-color: var(--color-ink); }
+  textarea.field { border: 1px solid var(--color-rule); padding: 0.75rem; min-height: 8rem; }
+  textarea.field:focus { border-color: var(--color-ink); }
+  label.kicker { display: block; margin-bottom: 0.2rem; }
+
+  .rule { border: 0; border-top: 1px solid var(--color-ink); }
+  .rule-light { border: 0; border-top: 1px solid var(--color-rule); }
+
+  .desk-card, .docket-row, .auth-card, .panel {
+    border: 1px solid var(--color-rule);
+    background: color-mix(in oklab, var(--color-paper) 88%, white);
+  }
+
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 999px;
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    flex: none;
+  }
+
+  .status-pill {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-rule);
+    padding: 0.2rem 0.45rem;
+  }
+  .status-draft { color: var(--color-ink-soft); }
+  .status-review { color: var(--color-navy); border-color: var(--color-navy); }
+  .status-ready { color: var(--color-mark); border-color: var(--color-mark); }
+
+  .editor-shell {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100dvh;
+  }
+  .editor-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--color-ink);
+  }
+  .editor-grid {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr) 22rem;
+    min-height: 0;
+  }
+  .editor-col {
+    min-height: 0;
+    overflow: auto;
+  }
+  .editor-col + .editor-col { border-left: 1px solid var(--color-rule); }
+
+  .spine-item { padding: 0.35rem 0; color: var(--color-ink-soft); line-height: 1.3; }
+  .spine-l1 { color: var(--color-ink); font-weight: 600; }
+  .spine-l2 { padding-left: 0.7rem; font-size: 0.95rem; }
+  .spine-l3 { padding-left: 1.3rem; font-size: 0.88rem; }
+  .spine-empty { color: var(--color-ink-soft); font-style: italic; }
+
+  .copy-title {
+    width: 100%;
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    background: transparent;
+    border: 0;
+    outline: none;
+    line-height: 1.1;
+  }
+  .copy-dek {
+    width: 100%;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--color-ink-soft);
+    background: transparent;
+    border: 0;
+    outline: none;
+    margin-top: 0.4rem;
+  }
+  .copy-body {
+    width: 100%;
+    min-height: 60vh;
+    resize: none;
+    background: transparent;
+    border: 0;
+    outline: none;
+    line-height: 1.55;
+    font-size: 1.05rem;
+    padding: 0;
+  }
+
+  .rail-section { padding: 1rem 1.1rem; border-bottom: 1px solid var(--color-rule); }
+  .mark-card, .pass-card, .activity-row {
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--color-rule);
+  }
+  .quote {
+    font-style: italic;
+    color: var(--color-ink-soft);
+    border-left: 2px solid var(--color-mark);
+    padding-left: 0.6rem;
+    margin: 0.35rem 0;
+  }
+
+  @media (max-width: 1024px) {
+    .editor-grid { grid-template-columns: 1fr; }
+    .editor-col { overflow: visible; }
+    .editor-shell { height: auto; min-height: 100dvh; }
+    body.h-dvh { height: auto; overflow: auto; }
+  }
+}

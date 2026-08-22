@@ -1,0 +1,9 @@
+copy_pass:
+  piece: house
+  agent: copy
+  requested_by: two
+  brief: Tighten the lede.
+  summary: Shortened the opening and kept the instruction.
+  proposed_body: "# Sit down\n\nTake the chair. Write as if a colleague will read it tonight."
+  notes: []
+  status: ready
